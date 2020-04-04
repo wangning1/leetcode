@@ -39,7 +39,7 @@ public class Solution {
         if (head == null || head.next == null) {
             return false;
         }
-        while (fast != null && slow != null) {
+        while (fast != null && slow != null && slow.next != null) {
             if (fast == slow) {
                 return true;
             }
