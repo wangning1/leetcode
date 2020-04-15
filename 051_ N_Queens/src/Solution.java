@@ -60,7 +60,6 @@ public class Solution {
             }
             resultList.add(queueStr);
         }
-        System.out.println(resultList);
         return resultList;
     }
 

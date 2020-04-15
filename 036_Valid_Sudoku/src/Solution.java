@@ -8,25 +8,22 @@ public class Solution {
             for (int j = 0; j < 9; j++) {
                 char c = board[i][j];
                 if (c != '.') {
-                    //判断行
-                    for (int row = 0; row < 9; row++) {
-                        if (row != i && board[row][j] == c) {
-                            return false;
-                        }
-                    }
-                    //判断列
-                    for (int col = 0; col < 9; col++) {
-                        if (col != j && board[i][col] == c) {
-                            return false;
-                        }
-                    }
                     //判断3*3矩阵
                     for (int k = 0; k < 9; k++) {
-                        if ((3 * (i / 3) + k / 3) != i && (3 * (j / 3) + k / 3) != j && board[3 * (i / 3) + k / 3][3 * (j / 3) + k / 3] == c) {
+                        //判断行
+                        if (k != i && board[k][j] == c) {
+                            return false;
+                        }
+
+                        //判断列
+                        if (k != j && board[i][k] == c) {
+                            return false;
+                        }
+
+                        if ((3 * (i / 3) + k / 3) != i && (3 * (j / 3) + k % 3) != j && board[3 * (i / 3) + k / 3][3 * (j / 3) + k % 3] == c) {
                             return false;
                         }
                     }
-
                 }
             }
         }
