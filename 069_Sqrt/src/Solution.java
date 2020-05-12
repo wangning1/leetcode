@@ -1,34 +1,33 @@
 /**
- * @authour winner
- * @Date 2020/4/15 22:31
+ * @Description:
+ * @CreateDate: 2020/4/16 11:43
+ * @Author: wangning
  */
 public class Solution {
     public int mySqrt(int x) {
         if (x == 0 || x == 1) {
             return x;
         }
-
-        double left = 0;
-        double right = x;
-        double middle = (left + right) / 2;
+        int left = 1;
+        int right = x;
         while (left <= right) {
-            if (middle == x / middle) {
-                return (int)middle;
-            } else if (middle > x / middle) {
-                right = middle;
+            int mid = (left + right) / 2;
+            if (mid == x / mid) {
+                return mid;
+            } else if (mid > x / mid) {
+                right = mid;
             } else {
-                left = middle;
+                if(mid == left){
+                    return mid;
+                }
+                left = mid;
             }
-            if(right - left < 0.01){
-                return (int)middle;
-            }
-            middle = (left + right) / 2;
         }
-        return (int)middle;
+        return 0;
     }
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.mySqrt(9));
+        System.out.println(solution.mySqrt(4));
     }
 }
