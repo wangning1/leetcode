@@ -17,6 +17,22 @@ public class Solution {
         }
         return maxResult;
     }
+    
+    
+    //暴力求解
+    public int maxProfit2(int[] prices) {
+        if (prices == null || prices.length == 1) {
+            return 0;
+        }
+        int maxProfit = 0;
+        //第i天买入，第j天卖出
+        for (int i = 0; i < prices.length - 1; i++) {
+            for (int j = i + 1; j < prices.length; j++) {
+                maxProfit = Math.max(prices[j] - prices[i], maxProfit);
+            }
+        }
+        return maxProfit;
+    }
 
     public static void main(String[] args) {
         int[] nums = new int[]{7,6,4,3,1};
