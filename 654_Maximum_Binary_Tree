@@ -1,0 +1,47 @@
+package com.winner;
+
+/**
+ * 构造最大的二叉树
+ * 给定一个不含重复元素的整数数组 nums 。一个以此数组直接递归构建的 最大二叉树 定义如下：
+ *
+ *     二叉树的根是数组 nums 中的最大元素。
+ *     左子树是通过数组中 最大值左边部分 递归构造出的最大二叉树。
+ *     右子树是通过数组中 最大值右边部分 递归构造出的最大二叉树。
+ *
+ * 返回有给定数组 nums 构建的 最大二叉树 。
+ */
+public class ConstructMaximumBinaryTree {
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return null;
+        }
+        return doConstruct(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode doConstruct(int[] nums, int left, int right) {
+        if (left > right) {
+            return null;
+        }
+        int maxValue = nums[left];
+        int maxIndex = left;
+        for (int i = left; i <= right; i++) {
+            if (maxValue < nums[i]) {
+                maxValue = nums[i];
+                maxIndex = i;
+            }
+        }
+
+        TreeNode node = new TreeNode(maxValue);
+        node.left = doConstruct(nums, left, maxIndex - 1);
+        node.right = doConstruct(nums, maxIndex + 1, right);
+        return node;
+    }
+
+    public static void main(String[] args) {
+        ConstructMaximumBinaryTree constructMaximumBinaryTree = new ConstructMaximumBinaryTree();
+        int[] nums = new int[]{3,2,1,6,0,5};
+        TreeNode root = constructMaximumBinaryTree.constructMaximumBinaryTree(nums);
+        TreeNode.preOrderPrintTree(root);
+    }
+
+}
