@@ -1,0 +1,35 @@
+package com.winner;
+
+/**
+ * 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。
+ */
+public class UniqueBinarySearchTrees {
+    int[][] mem;
+    public int numTrees(int n) {
+        mem = new int[n+1][n+1];
+        return count(1, n);
+    }
+
+    public int count(int low, int high) {
+        if (low > high) {
+            return 1;
+        }
+        if(mem[low][high] != 0){
+            return mem[low][high];
+        }
+        int res = 0;
+        for (int i = low; i <= high; i++) {
+            //以i为根
+            int leftRes = count(low, i - 1);
+            int rightRes = count(i + 1, high);
+            res += leftRes * rightRes;
+        }
+        mem[low][high] = res;
+        return res;
+    }
+
+    public static void main(String[] args) {
+        UniqueBinarySearchTrees uniqueBinarySearchTrees = new UniqueBinarySearchTrees();
+        System.out.println(uniqueBinarySearchTrees.numTrees(3));
+    }
+}
