@@ -17,7 +17,12 @@ import java.util.Arrays;
 //
 // 提示： 
 //
-
+// 
+// 1 <= k <= len(nums) <= 16 
+// 0 < nums[i] < 10000 
+// 
+// Related Topics 位运算 记忆化搜索 数组 动态规划 回溯 状态压缩 
+// 👍 379 👎 0
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
@@ -31,23 +36,61 @@ class Solution {
 
         if (sum % k != 0) return false;
         int target = sum / k;
-        int[] bucket = new int[k];
 
-        //进行优化
-        Arrays.sort(nums);
-        int i = 0;
-        int j = nums.length - 1;
-        while (i < j) {
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
-            i++;
-            j--;
-        }
+        //以桶视角，一个桶一个桶的装，
+        //记录第i个元素是否被使用
+        boolean[] used = new boolean[nums.length];
+        return backtrackInBucket(nums, k, 0, 0, used, target);
 
-        return backtrack(nums, 0, bucket, target);
+//        //以数字视角
+//        int[] bucket = new int[k];
+//        //进行优化
+//        Arrays.sort(nums);
+//        int i = 0;
+//        int j = nums.length - 1;
+//        while (i < j) {
+//            int temp = nums[i];
+//            nums[i] = nums[j];
+//            nums[j] = temp;
+//            i++;
+//            j--;
+//        }
+//        return backtrack(nums, 0, bucket, target);
     }
 
+    //解题思路二：以桶视角
+    private boolean backtrackInBucket(int[] nums, int k, int bucket, int start, boolean[] used, int target) {
+        if (k == 0) {
+            return true;
+        }
+
+        if (bucket == target) {
+            return backtrackInBucket(nums, k - 1, 0, 0, used, target);
+        }
+
+        for (int i = start; i < nums.length; i++) {
+            if (used[i]) {
+                continue;
+            }
+            if (bucket + nums[i] > target) {
+                continue;
+            }
+
+            bucket += nums[i];
+            used[i] = true;
+
+            if (backtrackInBucket(nums, k, bucket, i + 1, used, target)) {
+                return true;
+            }
+
+            bucket -= nums[i];
+            used[i] = false;
+        }
+        return false;
+    }
+
+
+    //解题思路一：以数字视角
     private boolean backtrack(int[] nums, int index, int[] bucket, int target) {
         if (index == nums.length) {
             for (int i = 0; i < bucket.length; i++) {
