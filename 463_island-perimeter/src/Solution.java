@@ -56,7 +56,7 @@ class Solution {
             return 0;
         }
         for (int r = 0; r < grid.length; r++) {
-            for (int c = 0; c < grid[0].length; r++) {
+            for (int c = 0; c < grid[0].length; c++) {
                 if(grid[r][c] == 1){
                     return dfs(grid, r, c);
                 }
