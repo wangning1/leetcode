@@ -58,6 +58,31 @@ import java.util.Map;
  * }
  */
 class Solution {
+    //动态规划解法
+    public int rob2(TreeNode root) {
+        int[] res = robTree(root);
+        return Math.max(res[0], res[1]);
+    }
+
+    int[] robTree(TreeNode node){
+        int[] res = new int[2];
+        if(node == null){
+            return res;
+        }
+        int[] left =  robTree(node.left);
+        int[] right = robTree(node.right);
+
+        //偷当前节点
+        res[1] = node.val + left[0] + right[0];
+
+        //不偷当前节点
+        res[0] = Math.max(left[0], left[1]) + Math.max(right[0] , right[1]);
+        return res;
+    }
+
+
+
+        //递归解法
     Map<TreeNode, Integer> map = new HashMap<>();
     public int rob(TreeNode root) {
         if(root == null) {
